@@ -1,35 +1,41 @@
-require('jsmart')
+/* globals jSmart */
+
+require('jsmart');
 
 // 端口
 exports.port = 8080;
 
 // 网站根目录
-var env = process.env.NODE_ENV
-var documentRoot = process.cwd()
-var feRoot = 'http://127.0.0.1:8081'
+var env = process.env.NODE_ENV;
+var documentRoot = process.cwd();
+var feRoot = 'http://127.0.0.1:8081';
 
 // 预发布
 if (env == 'preview') {
-    var documentRoot = process.cwd() + '/output'
-    var feRoot = '.'
+    documentRoot = process.cwd() + '/output';
+    feRoot = '.';
 }
 
-exports.documentRoot = documentRoot
+exports.documentRoot = documentRoot;
 exports.directoryIndexes = true;
 
 /**
  * 模拟 smarty 模板替换
+ * @param  {Object} content []
+ * @param  {Object} context []
+ * @return {Object}         []
  */
 function replace(content, context) {
-    var role = context.request.pathname.match(/\/(admin|user|visitor)/)
+    var role = context.request.pathname.match(/\/(admin|user|visitor)/);
     var data = require(documentRoot + '/mock/entry')(context.request, context.response);
-    data.feRoot = feRoot
-    data.user.role = role ? role[1] : 'admin'
-
+    data.feRoot = feRoot;
+    data.user.role = role ? role[1] : 'admin';
+    jSmart.prototype.left_delimiter = '{%';
+    jSmart.prototype.right_delimiter = '%}';
     var render = new jSmart(content);
     render.registerPlugin('modifier', 'json_encode', function (data) {
-        return JSON.stringify(data)
-    })
+        return JSON.stringify(data);
+    });
     return render.fetch(data);
 }
 
@@ -39,8 +45,8 @@ exports.getLocations = function () {
             location: /\/(?:admin|user|visitor)?(?:$|\?)/,
             handler: [
                 function (context) {
-                    var content = require('fs').readFileSync(documentRoot + '/index.tpl', 'utf8')
-                    context.content = replace(content, context)
+                    var content = require('fs').readFileSync(documentRoot + '/index.tpl', 'utf8');
+                    context.content = replace(content, context);
                 }
             ]
         },
@@ -48,13 +54,13 @@ exports.getLocations = function () {
             location: '/login',
             handler: [
                 function (context) {
-                    var content = require('fs').readFileSync(documentRoot + '/login.tpl', 'utf8')
-                    context.content = replace(content, context)
+                    var content = require('fs').readFileSync(documentRoot + '/login.tpl', 'utf8');
+                    context.content = replace(content, context);
                 }
             ]
         },
         // 接收`font.baidu.com`推送的同步字体数据，并保存到相应的目录
-        // @see https://github.com/ecomfe/fonteditor/wiki/%E4%BD%BF%E7%94%A8edp-webserver%E5%90%8C%E6%AD%A5%E5%AD%97%E4%BD%93%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%9C%AC%E5%9C%B0
+        // @see https://github.com/ecomfe/fonteditor/wiki/使用edp-webserver同步字体项目到本地
         {
             location: /\.font(?:$|\?)/,
             handler: [(function () {
@@ -73,7 +79,7 @@ exports.getLocations = function () {
             location: /\/api\/[\w-\/]+\/(?:add|del|modify)\w*(?:$|\?)/,
             handler: [
                 function (context) {
-                    context.request.pathname = '/api/success'
+                    context.request.pathname = '/api/success';
                 },
                 mockHandler()
             ]
@@ -107,9 +113,9 @@ exports.injectResource = function (res) {
  * 重定向地址到mock地址
  */
 function mockHandler() {
-    var fs = require('fs')
-    var path = require('path')
-    var cwd = process.cwd()
+    var fs = require('fs');
+    var path = require('path');
+    var cwd = process.cwd();
     return function (context) {
         var pathname = context.request.pathname;
         var modulePath = path.join(cwd, '/mock', pathname);
