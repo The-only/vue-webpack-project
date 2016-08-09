@@ -6,12 +6,12 @@
 var data = {
     appName: 'XXX',
     feRoot: '.',
-    user:{
-            userName: 'admin',
-            role: 'admin'
-        }
-}
+    user: {
+        userName: 'admin',
+        role: 'admin'
+    }
+};
 
 module.exports =  function () {
-    return data
-}
+    return data;
+};

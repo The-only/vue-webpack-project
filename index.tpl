@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{$appName}管理平台</title>
-    <link href="{$feRoot}/dep/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{$fecs}/dep/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="{$feRoot}/dep/bootstrap-combobox/bootstrap-combobox.css" rel="stylesheet">
     <link href="{$feRoot}/dep/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">

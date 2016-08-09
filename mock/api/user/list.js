@@ -15,13 +15,13 @@ var data = {
             phone: '12345678901'
         }
     ]
-}
+};
 
 module.exports =  function (req) {
-    data.page = +req.query.page || 1
+    data.page = +req.query.page || 1;
 
     return {
         status: 0,
         data: data
-    }
-}
+    };
+};

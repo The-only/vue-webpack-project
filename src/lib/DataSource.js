@@ -14,7 +14,7 @@ function request(name, options) {
     var me = this;
     // 这里做一下兼容, 如果没有设置url, 则从resources配置中取
     var res = name.indexOf('/') === 0
-        ? { url: name }
+        ? {url: name}
         : this.resources[name];
     if (!options.url) {
         if (!res) {
@@ -56,8 +56,8 @@ function request(name, options) {
                         return;
                     }
 
-                    if (me.onRedirect){
-                        e.onRedirect(data.data);
+                    if (me.onRedirect) {
+                        me.onRedirect(data.data);
                         return;
                     }
                 }

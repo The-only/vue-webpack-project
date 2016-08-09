@@ -5,5 +5,5 @@ module.exports =  function (req) {
         data: {
             file: 'http://placeholder.duapp.com/100/500/soft'
         }
-    }
-}
+    };
+};

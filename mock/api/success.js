@@ -5,5 +5,5 @@ module.exports =  function (req) {
         data: {
             id: 100
         }
-    }
-}
+    };
+};

@@ -11,24 +11,24 @@
 
 module.exports = {
     isLogin: function () {
-        return !!window.PAGE_DATA.user
+        return !!window.PAGE_DATA.user;
     },
     get: function () {
         return window.PAGE_DATA.user || {
             userName: '游客',
             role: 'visitor'
-        }
+        };
     },
     isAuth: function (action) {
         var role = this.get().role;
         // 管理员权限
         if (role === 'admin') {
-            return true
+            return true;
         }
 
         // 用户权限
         if (role === 'user') {
-            return action === 'profile' || action.indexOf('profile:') == 0
+            return action === 'profile' || action.indexOf('profile:') === 0;
         }
     }
 };

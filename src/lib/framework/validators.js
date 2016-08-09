@@ -4,29 +4,29 @@
  */
 
 var validators = {
-    'requires': function (val) {
-      return val.length >= 2 && val.length < 80;
+    requires: function (val) {
+        return val.length >= 2 && val.length < 80;
     },
-    'phone': function (val) {
-      return val.length && val.match(/^[\d]{6,20}$/);
+    phone: function (val) {
+        return val.length && val.match(/^[\d]{6,20}$/);
     },
-    'number': function (val) {
-      return val.match(/^\d+$/);
+    number: function (val) {
+        return val.match(/^\d+$/);
     },
-    'idcard': function (val) {
-      return val.match(/^\d{15,18}x?$/i);
+    idcard: function (val) {
+        return val.match(/^\d{15,18}x?$/i);
     },
-    'date': function (val) {
-      return val.match(/^\d{4}-\d{1,2}-\d{1,2}$/i);
+    date: function (val) {
+        return val.match(/^\d{4}-\d{1,2}-\d{1,2}$/i);
     },
-    'time': function (val) {
-      return val.match(/^\d{4}-\d{1,2}-\d{1,2}(?:\s+\d{1,2}:\d{1,2})?$/i);
+    time: function (val) {
+        return val.match(/^\d{4}-\d{1,2}-\d{1,2}(?:\s+\d{1,2}:\d{1,2})?$/i);
     }
-}
+};
 
 
 exports.use = function (Vue) {
     Object.keys(validators).forEach(function (key) {
-        Vue.validator(key, validators[key])
-    })
-}
+        Vue.validator(key, validators[key]);
+    });
+};
